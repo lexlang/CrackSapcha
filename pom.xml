@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.lexlang</groupId>
+  <artifactId>CrackSapcha</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  
+    <dependencies>
+    
+	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	    <version>3.8.1</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16 -->
+	<dependency>
+	    <groupId>org.bouncycastle</groupId>
+	    <artifactId>bcprov-jdk16</artifactId>
+	    <version>1.46</version>
+	</dependency>
+	
+	    <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	    <version>1.2.47</version>
+	</dependency>
+	
+	<dependency>
+      <groupId>com.lexlang</groupId>
+      <artifactId>Requests</artifactId>
+      <version>0.1.1</version>
+    </dependency>
+    
+   <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+	<dependency>
+	    <groupId>org.jsoup</groupId>
+	    <artifactId>jsoup</artifactId>
+	    <version>1.11.3</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit 2.31-->
+	<dependency>
+	    <groupId>net.sourceforge.htmlunit</groupId>
+	    <artifactId>htmlunit</artifactId>
+	    <version>2.32</version>
+	</dependency>
+	
+	<dependency>
+      <groupId>com.lexlang</groupId>
+	  <artifactId>ImageUtil</artifactId>
+	  <version>0.0.1</version>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/com.jhlabs/filters -->
+	<dependency>
+	    <groupId>com.jhlabs</groupId>
+	    <artifactId>filters</artifactId>
+	    <version>2.0.235-1</version>
+	</dependency>
+	
+	<dependency>
+    	<groupId>com.google.code.gson</groupId>
+    	<artifactId>gson</artifactId>
+    	<version>2.8.1</version>
+	</dependency>
+	
+	    <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+	<dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	    <version>24.1-jre</version>
+	</dependency>
+	
+  </dependencies>
+  
+  
+</project>
