@@ -85,7 +85,7 @@ public class WuBaVSlice {
 			JSONObject dataRes=makeResSlice(token,traces);
 			System.out.println(dataRes.toJSONString());
 			System.out.println(cRes.getJSONObject("data").getString("responseId"));
-			String data = new JavaScript(FileUtils.readFileToString(new File("CryptoJS.js"))).invokeFunction("DecryptInner", dataRes.toJSONString()
+			String data = new JavaScript(FileUtils.readFileToString(new File("file/CryptoJS.js"))).invokeFunction("DecryptInner", dataRes.toJSONString()
 					,cRes.getJSONObject("data").getString("responseId"));
 			
 			System.out.println(data);
@@ -106,7 +106,7 @@ public class WuBaVSlice {
 		}else{
 			String imgUrl="https://verifycode.58.com"+cRes.getJSONObject("data").getString("bgImgUrl");
 			Response dResp = requests.getUseHeader(imgUrl, hd);
-			//dResp.writeToLocal("crawl/z_"+System.currentTimeMillis()+".png");
+			//dResp.writeToLocal(System.currentTimeMillis()+".png");
 			BufferedImage img = dResp.getImage();
 			
 			
@@ -122,7 +122,7 @@ public class WuBaVSlice {
 			JSONObject dataRes=makeResTraces(token,traces);
 			System.out.println(dataRes.toJSONString());
 			System.out.println(cRes.getJSONObject("data").getString("responseId"));
-			String data = new JavaScript(FileUtils.readFileToString(new File("CryptoJS.js"))).invokeFunction("DecryptInner", dataRes.toJSONString()
+			String data = new JavaScript(FileUtils.readFileToString(new File("file/CryptoJS.js"))).invokeFunction("DecryptInner", dataRes.toJSONString()
 					,cRes.getJSONObject("data").getString("responseId"));
 			
 			System.out.println(data);
@@ -206,6 +206,7 @@ public class WuBaVSlice {
 	
 	
 	public static void main(String[] args){
+
 		for(int ind=0;ind<10;ind++){
 			try{
 				new WuBaVSlice().slice("https://bazhou.58.com/jiazhengbaojiexin/41767766942726x.shtml");

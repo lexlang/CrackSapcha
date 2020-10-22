@@ -14,7 +14,7 @@ public class Traces {
 	public static JSONObject getTraces(){
 		JSONObject traces=null;
 		try {
-			traces = JSONObject.parseObject(FileUtils.readFileToString(new File("slice.json")));
+			traces = JSONObject.parseObject(FileUtils.readFileToString(new File("file/slice.json")));
 		} catch (IOException e) {}
 		return traces;
 	}
