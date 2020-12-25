@@ -7,12 +7,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lexlang.ImageUtil.CommonUtil;
 import com.lexlang.ImageUtil.cut.ReEdge;
 import com.lexlang.ImageUtil.util.Base64Util;
@@ -85,7 +87,7 @@ public class Util {
 		
 		BufferedImage imgCut = img.getSubimage(0, minHight, img.getWidth(),  maxHight-minHight);
 		BufferedImage finalImg = new ReEdge().reImage(imgCut,150,20);
-		ImageIO.write(finalImg, "png", new File("123.png"));
+		//ImageIO.write(finalImg, "png", new File("123.png"));
 		
 		if(finalImg.getWidth()>400){
 			//58模块
@@ -182,6 +184,78 @@ public class Util {
 		Map<String, String> headerMap = new HeaderConfig().postBuilder().setContentType(HeaderConfig.POSTFORM).build();
 		Response response =requests.postUseHeader("http://"+ip+":"+port+"/localOcr", "image="+imgString, headerMap);
 		return response.getContent().replace("_", "");
+	}
+	
+	/**
+	 * 
+	 * @param image     给的图片
+	 * @param itemRecog 给的文字
+	 * @return
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
+	public static String[] recogLocationStr(BufferedImage image,String itemRecog) throws IOException, URISyntaxException{
+		String recog=localOcr(image,"localhost",8080); //114.116.246.246
+		JSONArray orderItem =new JSONArray();
+		for(int index=0;index<itemRecog.length();index++){
+			String t=itemRecog.charAt(index)+"";
+			JSONArray item =new JSONArray();
+			item.add(t);
+			orderItem.add(item);
+		}
+		//System.out.println(orderItem.toJSONString());
+		//System.out.println(recog);
+		JSONObject sortKeys=JSONObject.parseObject(recog);
+		String[] locations=new String[orderItem.size()];
+		//第一个字相同的
+		HashSet<String> keysRemove=new HashSet<String>();
+		for(int index=0;index<orderItem.size();index++){
+			String check=orderItem.getJSONArray(index).getString(0);
+			for(String key:sortKeys.keySet()){
+				JSONObject item = sortKeys.getJSONObject(key);
+				if(! keysRemove.contains(key) && (item.getJSONArray("ocr").getString(0).equals(check)
+						|| item.getJSONArray("ocr").getString(1).equals(check)
+						|| item.getJSONArray("ocr").getString(2).equals(check))){
+					JSONArray local = item.getJSONArray("local");
+					locations[index]=((local.getInteger(2)+local.getInteger(0))/2+",")+((local.getInteger(3)+local.getInteger(1))/2+"");
+					//sortKeys.remove(key);
+					keysRemove.add(key);
+					break;
+				}
+			}
+		}
+		
+		if(! checkNull(locations)){
+			return locations;
+		}
+		
+		//随机一个值
+		for(int index=0;index<orderItem.size();index++){
+			if(locations[index]!=null){
+				continue;
+			}
+			for(String key:sortKeys.keySet()){
+				if(! keysRemove.contains(key) ){
+					JSONObject item = sortKeys.getJSONObject(key);
+					JSONArray local = item.getJSONArray("local");
+					locations[index]=((local.getInteger(2)+local.getInteger(0))/2+",")+((local.getInteger(3)+local.getInteger(1))/2+"");
+					keysRemove.add(key);
+					break;
+				}
+			}
+		}
+		
+		return locations;
+	}
+	
+	
+	private static boolean checkNull(String[] locations){
+		for(int index=0;index<locations.length;index++){
+			if(locations[index]==null){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	
